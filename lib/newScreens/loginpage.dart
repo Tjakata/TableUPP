@@ -73,7 +73,7 @@ class LoginPage extends StatelessWidget {
                       prefixIcon: const Icon(Icons.email),
                       hintText: 'Email',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
                       ),
                     ),
@@ -88,7 +88,7 @@ class LoginPage extends StatelessWidget {
                       prefixIcon: const Icon(Icons.lock),
                       hintText: 'Password',
                       border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(10),
+                        borderRadius: BorderRadius.circular(30),
                         borderSide: BorderSide.none,
                       ),
                     ),
