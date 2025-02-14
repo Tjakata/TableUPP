@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'datepickerscreen.dart';
+import 'requestjointable.dart';
+import 'profile.dart';
+import 'activityscreen.dart';
 
 class AvailableTablesPage extends StatelessWidget {
   const AvailableTablesPage({super.key});
@@ -10,35 +14,59 @@ class AvailableTablesPage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            _buildHeader(),
-            _buildCategorySection(),
+            _buildHeader(context),
+            _buildCategorySection(context),
             _buildTrendingTopicsSection(),
           ],
         ),
       ),
-         bottomNavigationBar: BottomNavigationBar(
+      bottomNavigationBar: BottomNavigationBar(
         items: [
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.table_chart),
             label: 'Available Tables',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.mail),
+             icon: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  const ActivityScreen()),
+                );
+              },
+              child: const Icon(Icons.message, size: 40),
+            ),
             label: 'Activity',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle, size: 40),
+            icon: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  RequestToJoinTableScreen()),
+                );
+              },
+              child: const Icon(Icons.add_circle, size: 40),
+            ),
             label: '',
           ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person),
+           BottomNavigationBarItem(
+          icon: GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) =>  ProfilePageScreen()),
+                );
+              },
+              child: const Icon(Icons.person, size: 40),
+            ),
             label: 'Profile',
           ),
-          BottomNavigationBarItem(
+          const BottomNavigationBarItem(
             icon: Icon(Icons.settings),
             label: 'Settings',
           ),
-        ],
+        ], 
         selectedItemColor: Colors.green,
         unselectedItemColor: Colors.grey,
         showSelectedLabels: true,
@@ -47,9 +75,10 @@ class AvailableTablesPage extends StatelessWidget {
       ),
     );
   }
-}
 
-  Widget _buildHeader() {
+
+
+  Widget _buildHeader(BuildContext context) {  // Add context parameter
     return Container(
       height: 200,
       decoration: const BoxDecoration(
@@ -100,8 +129,17 @@ class AvailableTablesPage extends StatelessWidget {
                       borderRadius: BorderRadius.circular(30),
                     ),
                     child: IconButton(
-                      icon: const Icon(Icons.calendar_month),
-                      onPressed: () {},
+                      icon: const Icon(Icons.calendar_today),
+                      onPressed: () async {
+                        final selectedDate = await Navigator.push(
+                          context,
+                          MaterialPageRoute(builder: (context) => const DatePickerScreen()),
+                        );
+    
+                        if (selectedDate != null) {
+                          print('Selected date: $selectedDate');
+                        }
+                      },
                     ),
                   ),
                 ],
@@ -113,14 +151,15 @@ class AvailableTablesPage extends StatelessWidget {
     );
   }
 
-Widget _buildCategorySection() {
+  Widget _buildCategorySection(BuildContext context) {  // Add context parameter
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Column(
         children: [
-          Container(
+          SizedBox(
             width: double.infinity,  
             child: _buildCategoryCard(
+              context,  // Pass context
               'Dinner Tables',
               Icons.restaurant_menu,
               'images/restaurant_dine.jpg'
@@ -130,26 +169,29 @@ Widget _buildCategorySection() {
             children: [
               Expanded(
                 child: _buildCategoryCard(
+                  context,  // Pass context
                   'Lunch Tables',
                   Icons.lunch_dining,
-                  'images/restaurant_dine.jpg',
+                  'images/food_1.jpeg',
                   smallCard: true,
                 ),
               ),
               const SizedBox(width: 16),
               Expanded(
                 child: _buildCategoryCard(
+                  context,  // Pass context
                   'Drinks Only',
                   Icons.local_bar,
-                  'images/restaurant_dine.jpg',
+                  'images/food_2.jpeg',
                   smallCard: true,
                 ),
               ),
             ],
           ),
-          Container(
+          SizedBox(
             width: double.infinity, 
             child: _buildCategoryCard(
+              context,  // Pass context
               'Mixed Tables',
               Icons.people,
               'images/restaurant_dine.jpg',
@@ -159,6 +201,7 @@ Widget _buildCategorySection() {
             children: [
               Expanded(
                 child: _buildCategoryCard(
+                  context,  // Pass context
                   'Women Only',
                   Icons.female,
                   'images/restaurant_dine.jpg',
@@ -168,9 +211,10 @@ Widget _buildCategorySection() {
               const SizedBox(width: 16),
               Expanded(
                 child: _buildCategoryCard(
+                  context,  // Pass context
                   'Men Only',
                   Icons.male,
-                  'images/restaurant_dine.jpg',
+                  'images/dark_restaurant.png',
                   smallCard: true,
                 ),
               ),
@@ -180,9 +224,8 @@ Widget _buildCategorySection() {
       ),
     );
   }
-  
 
-Widget _buildCategoryCard(String title, IconData icon, String imagePath, {bool smallCard = false}) {
+  Widget _buildCategoryCard(BuildContext context, String title, IconData icon, String imagePath, {bool smallCard = false}) {  // Add context parameter
     return Container(
       height: smallCard ? 120 : 180,
       margin: const EdgeInsets.only(bottom: 16),
@@ -209,15 +252,7 @@ Widget _buildCategoryCard(String title, IconData icon, String imagePath, {bool s
           padding: const EdgeInsets.all(16),
           child: TextButton(
             onPressed: () {
-              // Add navigation logic here
               print('Navigating to $title tables');
-              // Example navigation:
-              // Navigator.push(
-              //   context,
-              //   MaterialPageRoute(
-              //     builder: (context) => TableListPage(category: title),
-              //   ),
-              // );
             },
             style: TextButton.styleFrom(
               padding: const EdgeInsets.all(4),
@@ -292,3 +327,4 @@ Widget _buildCategoryCard(String title, IconData icon, String imagePath, {bool s
       ),
     );
   }
+}

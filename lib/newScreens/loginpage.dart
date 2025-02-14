@@ -94,16 +94,16 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   const SizedBox(height: 30),
-                  // Login button
+                  
                   ElevatedButton(
                     onPressed: () {
                       Navigator.push(
                         context,
                         MaterialPageRoute(
-                          builder: (context) => AvailableTablesPage(),
+                          builder: (context) => const AvailableTablesPage(),
                         ),
                       );
-                      // Handle login logic
+                      
                     },
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(

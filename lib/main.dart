@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tableupp/tables/available_tables.dart';
 //import 'profile_screens/create_profile.dart';
-import 'tables/table_topic.dart';
+import 'newScreens/landingpage.dart';
 
 void main() {
 runApp(
@@ -9,7 +8,7 @@ runApp(
           child: MaterialApp(
             title: 'TableUPP',
             themeMode: ThemeMode.system,
-            home: AvailableTableScreen(),
+            home: LandingPage(),
             debugShowCheckedModeBanner: false,
           ),
       ),
