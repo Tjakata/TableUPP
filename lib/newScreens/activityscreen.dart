@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'chatscreen.dart'; 
+import 'chatscreen.dart';
 
 class ActivityScreen extends StatefulWidget {
   const ActivityScreen({Key? key}) : super(key: key);
@@ -8,10 +8,94 @@ class ActivityScreen extends StatefulWidget {
   _ActivityScreenState createState() => _ActivityScreenState();
 }
 
-class _ActivityScreenState extends State<ActivityScreen> with SingleTickerProviderStateMixin {
+class _ActivityScreenState extends State<ActivityScreen>
+    with SingleTickerProviderStateMixin {
   late TabController _tabController;
   int _currentIndex = 1;
-  
+
+  final List<Map<String, dynamic>> requests = [
+    {
+      'name': 'Jack Morrison',
+      'image': 'images/Jack Morrison.jpg',
+      'status': 'Wants to join your open table',
+      'event':
+          'For 6 at The Deli Woodstock - Cape Town, SA. 25 April 2024 at 7:30PM',
+    },
+    {
+      'name': 'Ketty Solov',
+      'image': 'images/Ketty Solov.jpg',
+      'status': 'Wants to join your open table',
+      'event':
+          'For 6 at The Deli Woodstock - Cape Town, SA. 25 April 2024 at 7:30PM',
+    },
+    {
+      'name': 'Kelvin Bolt',
+      'image': 'images/Kelvin Bolt.jpg',
+      'status': 'Wants to join your open table',
+      'event':
+          'For 6 at The Deli Woodstock - Cape Town, SA. 25 April 2024 at 7:30PM',
+    },
+    {
+      'name': 'Asante Ngwenya',
+      'image': 'images/Asante Ngwenya.jpg',
+      'status': 'Wants to join your open table',
+      'event':
+          'For 6 at The Deli Woodstock - Cape Town, SA. 25 April 2024 at 7:30PM',
+    },
+    {
+      'name': 'Ashley Ford',
+      'image': 'imagess/Ashley Ford.jpg',
+      'status': 'Will join your open table',
+      'event':
+          'For 6 at The Deli Woodstock - Cape Town, SA. 25 April 2024 at 7:30PM',
+    },
+  ];
+
+  final List<Map<String, dynamic>> notifications = [
+    {
+      'name': 'Ashley Ford',
+      'image': 'assets/ashley.jpg',
+      'status': 'Request Accepted',
+      'event':
+          'You can join the open table for 6 at The Deli Woodstock - Cape Town, SA. 25 April 2024, at 7:30PM',
+      'isAccepted': true,
+    },
+    {
+      'name': 'John Snow',
+      'image': 'assets/john.jpg',
+      'status': 'Request Declined',
+      'event':
+          'Will not be joining the table for 6 at The Deli Woodstock - Cape Town, SA. 25 April 2024 at 7:30PM',
+      'isAccepted': false,
+    },
+  ];
+
+  final List<Map<String, dynamic>> messages = [
+    {
+      'name': 'Emma Smith',
+      'image': 'assets/emma.jpg',
+      'isHost': true,
+      'status': 'Group messaging',
+      'event':
+          'Open table scheduled for 6 at The Deli Woodstock - Cape Town, SA. 25 April 2024 at 7:30PM',
+      'participants': [
+        'assets/p1.jpg',
+        'assets/p2.jpg',
+        'assets/ashley.jpg',
+        'assets/p3.jpg'
+      ],
+    },
+    {
+      'name': 'Ketty Solov',
+      'image': 'assets/ketty.jpg',
+      'isHost': true,
+      'status': 'Group messaging',
+      'event':
+          'Open table scheduled for 5 at Azure Restaurant - Cape Town, SA. 14 August 2024, at 7:00PM',
+      'participants': ['assets/p3.jpg', 'assets/p2.jpg'],
+    },
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -35,9 +119,13 @@ class _ActivityScreenState extends State<ActivityScreen> with SingleTickerProvid
         ),
         title: const Text(
           'Activity',
-          style: TextStyle(color: Colors.white),
+          style: TextStyle(
+            color: Colors.white,
+            fontSize: 24,
+            fontWeight: FontWeight.w600,
+          ),
         ),
-        backgroundColor: Colors.green,
+        backgroundColor: Color(0xFF00E676),
         elevation: 0,
       ),
       body: Column(
@@ -45,7 +133,7 @@ class _ActivityScreenState extends State<ActivityScreen> with SingleTickerProvid
           Container(
             decoration: BoxDecoration(
               color: Colors.white,
-              borderRadius: BorderRadius.circular(25),
+              borderRadius: BorderRadius.circular(30),
               boxShadow: [
                 BoxShadow(
                   color: Colors.grey.withOpacity(0.1),
@@ -58,11 +146,11 @@ class _ActivityScreenState extends State<ActivityScreen> with SingleTickerProvid
             child: TabBar(
               controller: _tabController,
               indicator: BoxDecoration(
-                borderRadius: BorderRadius.circular(20),
-                color: Colors.green,
+                borderRadius: BorderRadius.circular(30),
+                color: Color(0xFF00E676),
               ),
               labelColor: Colors.white,
-              unselectedLabelColor: Colors.green,
+              unselectedLabelColor: Color(0xFF00E676),
               tabs: const [
                 Tab(text: 'Requests'),
                 Tab(text: 'Notifications'),
@@ -85,22 +173,12 @@ class _ActivityScreenState extends State<ActivityScreen> with SingleTickerProvid
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
-          if (index != _currentIndex) {
-            switch (index) {
-              case 0:
-                Navigator.pushReplacementNamed(context, '/available-tables');
-                break;
-              case 2:
-                Navigator.pushReplacementNamed(context, '/request-join-table');
-                break;
-              case 3:
-                Navigator.pushReplacementNamed(context, '/profile');
-                break;
-            }
-          }
+          setState(() {
+            _currentIndex = index;
+          });
         },
         type: BottomNavigationBarType.fixed,
-        selectedItemColor: Colors.green,
+        selectedItemColor: Color(0xFF00E676),
         unselectedItemColor: Colors.grey,
         items: const [
           BottomNavigationBarItem(
@@ -112,7 +190,7 @@ class _ActivityScreenState extends State<ActivityScreen> with SingleTickerProvid
             label: 'Activity',
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.add_circle),
+            icon: Icon(Icons.add_circle, size: 40),
             label: '',
           ),
           BottomNavigationBarItem(
@@ -131,30 +209,61 @@ class _ActivityScreenState extends State<ActivityScreen> with SingleTickerProvid
   Widget _buildRequestsTab() {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
-      itemCount: 5,
-      separatorBuilder: (context, index) => const Divider(),
+      itemCount: requests.length,
+      separatorBuilder: (context, index) => const Divider(height: 1),
       itemBuilder: (context, index) {
+        final request = requests[index];
         return ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           leading: CircleAvatar(
-            child: Icon(Icons.person),
+            radius: 25,
+            backgroundImage: AssetImage(request['image']),
           ),
-          title: Text('User ${index + 1}'),
-          subtitle: const Text(
-            'Wants to join your open table\nFor 6 at The Deli Woodstock - Cape Town, SA. 25 April 2024 at 7:30PM',
+          title: Text(
+            request['name'],
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
           ),
-          trailing: ElevatedButton(
-            onPressed: () {},
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                request['status'],
+                style: TextStyle(
+                  color: Color(0xFF00E676),
+                  fontSize: 16,
+                ),
               ),
-            ),
-            child: const Text(
-              'Open',
-              style: TextStyle(color: Colors.white),
-            ),
+              Text(
+                request['event'],
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ),
+          trailing: request['status'].contains('Will join')
+              ? Icon(Icons.check_circle, color: Color(0xFF00E676))
+              : ElevatedButton(
+                  onPressed: () {},
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Color(0xFF00E676),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(20),
+                    ),
+                    padding: EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  child: const Text(
+                    'Open',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 16,
+                    ),
+                  ),
+                ),
         );
       },
     );
@@ -163,24 +272,43 @@ class _ActivityScreenState extends State<ActivityScreen> with SingleTickerProvid
   Widget _buildNotificationsTab() {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
-      itemCount: 2,
-      separatorBuilder: (context, index) => const Divider(),
+      itemCount: notifications.length,
+      separatorBuilder: (context, index) => const Divider(height: 1),
       itemBuilder: (context, index) {
-        final bool isAccepted = index == 0;
+        final notification = notifications[index];
         return ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
           leading: CircleAvatar(
-            child: Icon(Icons.person),
+            radius: 25,
+            backgroundImage: AssetImage(notification['image']),
           ),
-          title: Text('User ${index + 1}'),
-          subtitle: Text(
-            isAccepted ? 'Request Accepted' : 'Request Declined',
+          title: Text(
+            notification['name'],
             style: TextStyle(
-              color: isAccepted ? Colors.green : Colors.red,
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
             ),
           ),
-          trailing: Icon(
-            isAccepted ? Icons.check_circle : Icons.cancel,
-            color: isAccepted ? Colors.green : Colors.red,
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                notification['status'],
+                style: TextStyle(
+                  color: notification['isAccepted']
+                      ? Color(0xFF00E676)
+                      : Colors.red,
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                notification['event'],
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                ),
+              ),
+            ],
           ),
         );
       },
@@ -190,28 +318,75 @@ class _ActivityScreenState extends State<ActivityScreen> with SingleTickerProvid
   Widget _buildMessagesTab() {
     return ListView.separated(
       padding: const EdgeInsets.all(16),
-      itemCount: 2,
-      separatorBuilder: (context, index) => const Divider(),
+      itemCount: messages.length,
+      separatorBuilder: (context, index) => const Divider(height: 1),
       itemBuilder: (context, index) {
-        return GestureDetector(
+        final message = messages[index];
+        return ListTile(
+          contentPadding: EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+          leading: CircleAvatar(
+            radius: 25,
+            backgroundImage: AssetImage(message['image']),
+          ),
+          title: Text(
+            '${message['name']} (Host)',
+            style: TextStyle(
+              fontSize: 18,
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          subtitle: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                message['status'],
+                style: TextStyle(
+                  color: Color(0xFF00E676),
+                  fontSize: 16,
+                ),
+              ),
+              Text(
+                message['event'],
+                style: TextStyle(
+                  color: Colors.grey[600],
+                  fontSize: 14,
+                ),
+              ),
+              SizedBox(height: 8),
+              Row(
+                children: [
+                  ...message['participants']
+                      .map((participant) => Padding(
+                            padding: const EdgeInsets.only(right: 4),
+                            child: CircleAvatar(
+                              radius: 15,
+                              backgroundImage: AssetImage(participant),
+                            ),
+                          ))
+                      .toList(),
+                  if (message['participants'].length < 6)
+                    CircleAvatar(
+                      radius: 15,
+                      backgroundColor: Colors.grey[300],
+                      child: Text(
+                        '?',
+                        style: TextStyle(color: Colors.grey[600]),
+                      ),
+                    ),
+                ],
+              ),
+            ],
+          ),
+          trailing: Icon(
+            Icons.arrow_forward_ios,
+            color: Color(0xFF00E676),
+          ),
           onTap: () {
-            
             Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => const ChatScreen()),
             );
           },
-          child: ListTile(
-            leading: CircleAvatar(
-              child: Icon(Icons.person),
-            ),
-            title: Text('User ${index + 1} (Host)'),
-            subtitle: const Text('Group messaging'),
-            trailing: const Icon(
-              Icons.arrow_forward_ios,
-              color: Colors.green,
-            ),
-          ),
         );
       },
     );
