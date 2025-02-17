@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:tableupp/tables/available_tables.dart';
-//import 'profile_screens/create_profile.dart';
-import 'tables/table_topic.dart';
+import 'package:tableupp/splashScreen/splash_screen.dart';
+
 
 void main() {
 runApp(
-      const MyApp(
+      MyApp(
           child: MaterialApp(
             title: 'TableUPP',
             themeMode: ThemeMode.system,
-            home: AvailableTableScreen(),
+            home: SplashScreen(),
             debugShowCheckedModeBanner: false,
           ),
       ),
